@@ -77,13 +77,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "РефЭкспресс — аренда и продажа рефконтейнеров" },
+      { title: "Lovable App" },
       {
         name: "description",
         content:
-          "B2B-лендинг РефЭкспресс: аренда и продажа рефрижераторных контейнеров с гарантией температуры от -40°C.",
+          "Imports projects from repositories into your development environment.",
       },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "Lovable App" },
+      { name: "twitter:title", content: "Lovable App" },
+      { property: "og:description", content: "Imports projects from repositories into your development environment." },
+      { name: "twitter:description", content: "Imports projects from repositories into your development environment." },
+      { property: "og:type", content: "website" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

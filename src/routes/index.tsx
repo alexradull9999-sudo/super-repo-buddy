@@ -4,17 +4,17 @@ import RefExpressApp from "@/components/RefExpressApp";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "РефЭкспресс — аренда и продажа рефконтейнеров" },
+      { title: "Lovable App" },
       {
         name: "description",
         content:
-          "B2B-лендинг РефЭкспресс: аренда и продажа рефрижераторных контейнеров с гарантией температуры от -40°C.",
+          "Imports projects from repositories into your development environment.",
       },
-      { property: "og:title", content: "РефЭкспресс — аренда и продажа рефконтейнеров" },
+      { property: "og:title", content: "Lovable App" },
       {
         property: "og:description",
         content:
-          "Аренда и продажа рефрижераторных контейнеров с гарантией температуры от -40°C.",
+          "Imports projects from repositories into your development environment.",
       },
       { property: "og:type", content: "website" },
     ],
