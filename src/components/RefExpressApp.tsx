@@ -7,28 +7,18 @@ import {
 } from 'lucide-react';
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 
-// --- Components ---
+import { sendTelegramNotification } from '@/lib/telegram.functions';
 
-const TELEGRAM_BOT_TOKEN = import.meta.env.VITE_TELEGRAM_BOT_TOKEN || '8736832056:AAEUFgeNKKVA-ThvK17L7qBrX9Y-iKqJtug';
-const TELEGRAM_CHAT_ID = import.meta.env.VITE_TELEGRAM_CHAT_ID || '5874913931';
+// --- Components ---
 
 const sendTelegramMessage = async (text: string) => {
   try {
-    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: TELEGRAM_CHAT_ID,
-        text,
-        parse_mode: 'HTML',
-      }),
-    });
+    await sendTelegramNotification({ data: { text } });
   } catch (error) {
     console.error('Error sending message to Telegram:', error);
   }
 };
+
 
 const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const [phone, setPhone] = useState('');
