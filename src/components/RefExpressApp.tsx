@@ -21,15 +21,38 @@ const sendTelegramMessage = async (text: string) => {
 
 const MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/5r6wxgf3i5750sdcv4kn7nrpfza3l55u';
 
+const buildLeadText = (payload: Record<string, unknown>) => {
+  const lines: string[] = [];
+  lines.push('🆕 Новая заявка с сайта РефЭкспресс');
+  lines.push('');
+  if (payload.source) lines.push(`Источник: ${payload.source}`);
+  if (payload.name) lines.push(`Имя/тип: ${payload.name}`);
+  if (payload.phone) lines.push(`Телефон: ${payload.phone}`);
+  if (payload.messenger) lines.push(`Мессенджер: ${payload.messenger}`);
+  if (payload.message) lines.push(`Сообщение: ${payload.message}`);
+  if (payload.answers && typeof payload.answers === 'object') {
+    lines.push('');
+    lines.push('Ответы квиза:');
+    for (const [k, v] of Object.entries(payload.answers as Record<string, unknown>)) {
+      lines.push(`• ${k}: ${v}`);
+    }
+  }
+  return lines.join('\n');
+};
+
 const sendWebhookLead = async (payload: Record<string, unknown>) => {
   try {
+    const enriched = {
+      ...payload,
+      submittedAt: new Date().toISOString(),
+      pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+    };
     await fetch(MAKE_WEBHOOK_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        ...payload,
-        submittedAt: new Date().toISOString(),
-        pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+        ...enriched,
+        text: buildLeadText(enriched),
       }),
     });
   } catch (err) {
