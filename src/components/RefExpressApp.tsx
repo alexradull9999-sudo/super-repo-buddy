@@ -178,8 +178,17 @@ const CatalogModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
       
       // 1. Send Telegram Notification
       await sendTelegramMessage(`<b>Запрос каталога!</b>\n\n📱 Мессенджер: ${messenger}\n📞 Телефон: ${phone}`);
-      
-      // 2. Submit to AmoCRM via backend API
+
+      // 2. Send to Make.com webhook
+      await sendWebhookLead({
+        name: 'Запрос каталога',
+        phone,
+        messenger,
+        message: `Предоставить в мессенджер: ${messenger}`,
+        source: 'Запрос каталога (Модальное окно)',
+      });
+
+      // 3. Submit to AmoCRM via backend API
       try {
         await fetch('/api/lead', {
           method: 'POST',
