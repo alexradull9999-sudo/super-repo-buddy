@@ -683,8 +683,17 @@ const Quiz = () => {
       
       // 1. Send Telegram Notification
       await sendTelegramMessage(`<b>Результаты квиза!</b>\n\n${quizDetails}\n📞 Телефон: ${phone}`);
-      
-      // 2. Submit to AmoCRM via backend API
+
+      // 2. Send to Make.com webhook
+      await sendWebhookLead({
+        name: 'Лид из Квиза',
+        phone,
+        message: quizDetails,
+        answers,
+        source: 'Квиз на сайте',
+      });
+
+      // 3. Submit to AmoCRM via backend API
       try {
         await fetch('/api/lead', {
           method: 'POST',
