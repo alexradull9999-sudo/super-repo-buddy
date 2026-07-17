@@ -49,8 +49,15 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
       
       // 1. Send Telegram Notification
       await sendTelegramMessage(`<b>Новая заявка на подбор контейнера!</b>\n\n📞 Телефон: ${phone}`);
-      
-      // 2. Submit to AmoCRM via backend API
+
+      // 2. Send to Make.com webhook
+      await sendWebhookLead({
+        name: 'Заявка на подбор',
+        phone,
+        source: 'Подбор контейнера (Модальное окно)',
+      });
+
+      // 3. Submit to AmoCRM via backend API
       try {
         await fetch('/api/lead', {
           method: 'POST',
