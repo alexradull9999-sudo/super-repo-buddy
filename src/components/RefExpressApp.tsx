@@ -19,6 +19,24 @@ const sendTelegramMessage = async (text: string) => {
   }
 };
 
+const MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/5r6wxgf3i5750sdcv4kn7nrpfza3l55u';
+
+const sendWebhookLead = async (payload: Record<string, unknown>) => {
+  try {
+    await fetch(MAKE_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...payload,
+        submittedAt: new Date().toISOString(),
+        pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+      }),
+    });
+  } catch (err) {
+    console.error('Error sending webhook to Make:', err);
+  }
+};
+
 
 const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const [phone, setPhone] = useState('');
@@ -31,8 +49,15 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
       
       // 1. Send Telegram Notification
       await sendTelegramMessage(`<b>Новая заявка на подбор контейнера!</b>\n\n📞 Телефон: ${phone}`);
-      
-      // 2. Submit to AmoCRM via backend API
+
+      // 2. Send to Make.com webhook
+      await sendWebhookLead({
+        name: 'Заявка на подбор',
+        phone,
+        source: 'Подбор контейнера (Модальное окно)',
+      });
+
+      // 3. Submit to AmoCRM via backend API
       try {
         await fetch('/api/lead', {
           method: 'POST',
@@ -153,8 +178,17 @@ const CatalogModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
       
       // 1. Send Telegram Notification
       await sendTelegramMessage(`<b>Запрос каталога!</b>\n\n📱 Мессенджер: ${messenger}\n📞 Телефон: ${phone}`);
-      
-      // 2. Submit to AmoCRM via backend API
+
+      // 2. Send to Make.com webhook
+      await sendWebhookLead({
+        name: 'Запрос каталога',
+        phone,
+        messenger,
+        message: `Предоставить в мессенджер: ${messenger}`,
+        source: 'Запрос каталога (Модальное окно)',
+      });
+
+      // 3. Submit to AmoCRM via backend API
       try {
         await fetch('/api/lead', {
           method: 'POST',
@@ -649,8 +683,17 @@ const Quiz = () => {
       
       // 1. Send Telegram Notification
       await sendTelegramMessage(`<b>Результаты квиза!</b>\n\n${quizDetails}\n📞 Телефон: ${phone}`);
-      
-      // 2. Submit to AmoCRM via backend API
+
+      // 2. Send to Make.com webhook
+      await sendWebhookLead({
+        name: 'Лид из Квиза',
+        phone,
+        message: quizDetails,
+        answers,
+        source: 'Квиз на сайте',
+      });
+
+      // 3. Submit to AmoCRM via backend API
       try {
         await fetch('/api/lead', {
           method: 'POST',
