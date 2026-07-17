@@ -19,6 +19,24 @@ const sendTelegramMessage = async (text: string) => {
   }
 };
 
+const MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/5r6wxgf3i5750sdcv4kn7nrpfza3l55u';
+
+const sendWebhookLead = async (payload: Record<string, unknown>) => {
+  try {
+    await fetch(MAKE_WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...payload,
+        submittedAt: new Date().toISOString(),
+        pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+      }),
+    });
+  } catch (err) {
+    console.error('Error sending webhook to Make:', err);
+  }
+};
+
 
 const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   const [phone, setPhone] = useState('');
