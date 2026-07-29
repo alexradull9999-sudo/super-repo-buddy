@@ -81,6 +81,7 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     if (phone.length > 5) {
       setIsSubmitted(true);
       reachGoal('submit_callback', { source: 'callback_modal' });
+      reachGoal('submit_form', { form: 'callback' });
       
       
       // 1. Send Telegram Notification
