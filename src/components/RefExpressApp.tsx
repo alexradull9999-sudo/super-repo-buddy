@@ -710,6 +710,9 @@ const Quiz = () => {
   const [answers, setAnswers] = useState<Record<number, string>>({});
 
   const handleAnswer = (answer: string) => {
+    if (step === 1 && !answers[1]) {
+      reachGoal('quiz_start');
+    }
     setAnswers(prev => ({ ...prev, [step]: answer }));
     setStep(s => Math.min(s + 1, 5));
   };
@@ -717,6 +720,7 @@ const Quiz = () => {
   const handleFinish = async () => {
     if (phone.length > 5) {
       setStep(5);
+      reachGoal('quiz_finish');
       const quizDetails = `1. Цель: ${answers[1] || 'Не указано'}\n2. Температура: ${answers[2] || 'Не указано'}\n3. Формат: ${answers[3] || 'Не указано'}`;
       
       // 1. Send Telegram Notification
