@@ -723,6 +723,7 @@ const Quiz = () => {
     if (phone.length > 5) {
       setStep(5);
       reachGoal('quiz_finish');
+      reachGoal('submit_form', { form: 'quiz' });
       const quizDetails = `1. Цель: ${answers[1] || 'Не указано'}\n2. Температура: ${answers[2] || 'Не указано'}\n3. Формат: ${answers[3] || 'Не указано'}`;
       
       // 1. Send Telegram Notification
