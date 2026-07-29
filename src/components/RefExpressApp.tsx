@@ -211,6 +211,8 @@ const CatalogModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     e.preventDefault();
     if (phone.length > 5) {
       setIsSubmitted(true);
+      reachGoal('submit_catalog', { source: 'catalog_modal', messenger });
+      
       
       // 1. Send Telegram Notification
       await sendTelegramMessage(`<b>Запрос каталога!</b>\n\n📱 Мессенджер: ${messenger}\n📞 Телефон: ${phone}`);
