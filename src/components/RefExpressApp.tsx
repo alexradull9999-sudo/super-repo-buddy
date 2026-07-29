@@ -40,6 +40,17 @@ const buildLeadText = (payload: Record<string, unknown>) => {
   return lines.join('\n');
 };
 
+const YM_COUNTER_ID = 19076140;
+const reachGoal = (goal: string, params?: Record<string, unknown>) => {
+  try {
+    if (typeof window !== 'undefined' && typeof (window as any).ym === 'function') {
+      (window as any).ym(YM_COUNTER_ID, 'reachGoal', goal, params);
+    }
+  } catch (err) {
+    console.error('Yandex Metrika reachGoal error:', err);
+  }
+};
+
 const sendWebhookLead = async (payload: Record<string, unknown>) => {
   try {
     const enriched = {
