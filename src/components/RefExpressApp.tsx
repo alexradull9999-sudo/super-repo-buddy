@@ -40,6 +40,17 @@ const buildLeadText = (payload: Record<string, unknown>) => {
   return lines.join('\n');
 };
 
+const YM_COUNTER_ID = 19076140;
+const reachGoal = (goal: string, params?: Record<string, unknown>) => {
+  try {
+    if (typeof window !== 'undefined' && typeof (window as any).ym === 'function') {
+      (window as any).ym(YM_COUNTER_ID, 'reachGoal', goal, params);
+    }
+  } catch (err) {
+    console.error('Yandex Metrika reachGoal error:', err);
+  }
+};
+
 const sendWebhookLead = async (payload: Record<string, unknown>) => {
   try {
     const enriched = {
@@ -69,6 +80,8 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     e.preventDefault();
     if (phone.length > 5) {
       setIsSubmitted(true);
+      reachGoal('submit_callback', { source: 'callback_modal' });
+      
       
       // 1. Send Telegram Notification
       await sendTelegramMessage(`<b>Новая заявка на подбор контейнера!</b>\n\n📞 Телефон: ${phone}`);
@@ -198,6 +211,8 @@ const CatalogModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     e.preventDefault();
     if (phone.length > 5) {
       setIsSubmitted(true);
+      reachGoal('submit_catalog', { source: 'catalog_modal', messenger });
+      
       
       // 1. Send Telegram Notification
       await sendTelegramMessage(`<b>Запрос каталога!</b>\n\n📱 Мессенджер: ${messenger}\n📞 Телефон: ${phone}`);
@@ -483,10 +498,10 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
           {/* CTA & Phone */}
           <div className="hidden lg:flex items-center gap-6">
             <div className="flex flex-col items-end">
-              <a href="tel:+78125668710" className="text-lg font-bold text-gray-900 hover:text-[#00AEEF] transition-colors">
+              <a href="tel:+78125668710" onClick={() => reachGoal('click_phone')} className="text-lg font-bold text-gray-900 hover:text-[#00AEEF] transition-colors">
                 +7 (812) 566-87-10
               </a>
-              <a href="mailto:sales@refexpress.ru" className="text-xs text-gray-500 hover:text-[#00AEEF] transition-colors">sales@refexpress.ru</a>
+              <a href="mailto:sales@refexpress.ru" onClick={() => reachGoal('click_email')} className="text-xs text-gray-500 hover:text-[#00AEEF] transition-colors">sales@refexpress.ru</a>
             </div>
             <button 
               onClick={onOpenModal}
@@ -695,6 +710,9 @@ const Quiz = () => {
   const [answers, setAnswers] = useState<Record<number, string>>({});
 
   const handleAnswer = (answer: string) => {
+    if (step === 1 && !answers[1]) {
+      reachGoal('quiz_start');
+    }
     setAnswers(prev => ({ ...prev, [step]: answer }));
     setStep(s => Math.min(s + 1, 5));
   };
@@ -702,6 +720,7 @@ const Quiz = () => {
   const handleFinish = async () => {
     if (phone.length > 5) {
       setStep(5);
+      reachGoal('quiz_finish');
       const quizDetails = `1. Цель: ${answers[1] || 'Не указано'}\n2. Температура: ${answers[2] || 'Не указано'}\n3. Формат: ${answers[3] || 'Не указано'}`;
       
       // 1. Send Telegram Notification
@@ -1508,7 +1527,7 @@ const Questions = ({ onOpenModal }: { onOpenModal: () => void }) => {
             Получить консультацию
           </button>
           <a 
-            href="tel:+78125668710"
+            href="tel:+78125668710" onClick={() => reachGoal('click_phone')}
             className="w-full sm:w-auto bg-transparent border-2 border-white/20 hover:border-white text-white px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2"
           >
             <Phone className="w-5 h-5" />
@@ -1551,11 +1570,11 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#00AEEF] shrink-0" />
-                <a href="tel:+78125668710" className="hover:text-white transition-colors">+7 (812) 566-87-10</a>
+                <a href="tel:+78125668710" onClick={() => reachGoal('click_phone')} className="hover:text-white transition-colors">+7 (812) 566-87-10</a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#00AEEF] shrink-0" />
-                <a href="mailto:sales@refexpress.ru" className="hover:text-white transition-colors">sales@refexpress.ru</a>
+                <a href="mailto:sales@refexpress.ru" onClick={() => reachGoal('click_email')} className="hover:text-white transition-colors">sales@refexpress.ru</a>
               </li>
             </ul>
           </div>
@@ -1585,26 +1604,36 @@ export default function RefExpressApp() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCatalogModalOpen, setIsCatalogModalOpen] = useState(false);
 
+  const openContactModal = () => {
+    reachGoal('open_callback_modal');
+    setIsModalOpen(true);
+  };
+  const openCatalogModal = () => {
+    reachGoal('open_catalog_modal');
+    setIsCatalogModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-[#00AEEF] selection:text-white relative">
       <FrostEffect />
       <TemperatureIndicator />
-      <Header onOpenModal={() => setIsModalOpen(true)} />
+      <Header onOpenModal={openContactModal} />
       <main>
         <Hero />
         <Benefits />
         <Quiz />
-        <Trust onOpenContactModal={() => setIsModalOpen(true)} />
+        <Trust onOpenContactModal={openContactModal} />
         <HowItWorks />
-        <Catalog onOpenModal={() => setIsModalOpen(true)} />
-        <FinalCTA onOpenModal={() => setIsCatalogModalOpen(true)} />
-        <ServiceCenter onOpenModal={() => setIsModalOpen(true)} />
+        <Catalog onOpenModal={openContactModal} />
+        <FinalCTA onOpenModal={openCatalogModal} />
+        <ServiceCenter onOpenModal={openContactModal} />
         <TerminalsMap />
-        <Questions onOpenModal={() => setIsModalOpen(true)} />
+        <Questions onOpenModal={openContactModal} />
       </main>
       <Footer />
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <CatalogModal isOpen={isCatalogModalOpen} onClose={() => setIsCatalogModalOpen(false)} />
+
     </div>
   );
 }
