@@ -1604,26 +1604,36 @@ export default function RefExpressApp() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isCatalogModalOpen, setIsCatalogModalOpen] = useState(false);
 
+  const openContactModal = () => {
+    reachGoal('open_callback_modal');
+    setIsModalOpen(true);
+  };
+  const openCatalogModal = () => {
+    reachGoal('open_catalog_modal');
+    setIsCatalogModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen bg-white font-sans selection:bg-[#00AEEF] selection:text-white relative">
       <FrostEffect />
       <TemperatureIndicator />
-      <Header onOpenModal={() => setIsModalOpen(true)} />
+      <Header onOpenModal={openContactModal} />
       <main>
         <Hero />
         <Benefits />
         <Quiz />
-        <Trust onOpenContactModal={() => setIsModalOpen(true)} />
+        <Trust onOpenContactModal={openContactModal} />
         <HowItWorks />
-        <Catalog onOpenModal={() => setIsModalOpen(true)} />
-        <FinalCTA onOpenModal={() => setIsCatalogModalOpen(true)} />
-        <ServiceCenter onOpenModal={() => setIsModalOpen(true)} />
+        <Catalog onOpenModal={openContactModal} />
+        <FinalCTA onOpenModal={openCatalogModal} />
+        <ServiceCenter onOpenModal={openContactModal} />
         <TerminalsMap />
-        <Questions onOpenModal={() => setIsModalOpen(true)} />
+        <Questions onOpenModal={openContactModal} />
       </main>
       <Footer />
       <ContactModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       <CatalogModal isOpen={isCatalogModalOpen} onClose={() => setIsCatalogModalOpen(false)} />
+
     </div>
   );
 }
