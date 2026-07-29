@@ -80,6 +80,8 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     e.preventDefault();
     if (phone.length > 5) {
       setIsSubmitted(true);
+      reachGoal('submit_callback', { source: 'callback_modal' });
+      
       
       // 1. Send Telegram Notification
       await sendTelegramMessage(`<b>Новая заявка на подбор контейнера!</b>\n\n📞 Телефон: ${phone}`);
