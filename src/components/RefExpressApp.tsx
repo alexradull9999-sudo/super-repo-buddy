@@ -213,6 +213,7 @@ const CatalogModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
     if (phone.length > 5) {
       setIsSubmitted(true);
       reachGoal('submit_catalog', { source: 'catalog_modal', messenger });
+      reachGoal('submit_form', { form: 'catalog' });
       
       
       // 1. Send Telegram Notification
