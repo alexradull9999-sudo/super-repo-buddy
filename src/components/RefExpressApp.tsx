@@ -500,8 +500,8 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
           {/* CTA & Phone */}
           <div className="hidden lg:flex items-center gap-6">
             <div className="flex flex-col items-end">
-              <a href="tel:+78125668710" onClick={() => reachGoal('click_phone')} className="text-lg font-bold text-gray-900 hover:text-[#00AEEF] transition-colors">
-                +7 (812) 566-87-10
+              <a href="tel:+79213937705" onClick={() => reachGoal('click_phone')} className="text-lg font-bold text-gray-900 hover:text-[#00AEEF] transition-colors">
+                +7 (921) 393-77-05
               </a>
               <a href="mailto:sales@refexpress.ru" onClick={() => reachGoal('click_email')} className="text-xs text-gray-500 hover:text-[#00AEEF] transition-colors">sales@refexpress.ru</a>
             </div>
@@ -1530,7 +1530,7 @@ const Questions = ({ onOpenModal }: { onOpenModal: () => void }) => {
             Получить консультацию
           </button>
           <a 
-            href="tel:+78125668710" onClick={() => reachGoal('click_phone')}
+            href="tel:+79213937705" onClick={() => reachGoal('click_phone')}
             className="w-full sm:w-auto bg-transparent border-2 border-white/20 hover:border-white text-white px-8 py-4 rounded-xl font-bold text-lg transition-all flex items-center justify-center gap-2"
           >
             <Phone className="w-5 h-5" />
@@ -1573,7 +1573,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-[#00AEEF] shrink-0" />
-                <a href="tel:+78125668710" onClick={() => reachGoal('click_phone')} className="hover:text-white transition-colors">+7 (812) 566-87-10</a>
+                <a href="tel:+79213937705" onClick={() => reachGoal('click_phone')} className="hover:text-white transition-colors">+7 (921) 393-77-05</a>
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#00AEEF] shrink-0" />
