@@ -8,6 +8,7 @@ import {
 import { ComposableMap, Geographies, Geography, Marker } from "react-simple-maps";
 
 import { sendTelegramNotification } from '@/lib/telegram.functions';
+import { sendAmoLead } from '@/lib/amocrm.functions';
 
 // --- Components ---
 
@@ -48,6 +49,15 @@ const reachGoal = (goal: string, params?: Record<string, unknown>) => {
     }
   } catch (err) {
     console.error('Yandex Metrika reachGoal error:', err);
+  }
+};
+
+
+const sendAmoCrmLead = async (phone: string, comment: string) => {
+  try {
+    await sendAmoLead({ data: { phone, comment } });
+  } catch (err) {
+    console.error('Error submitting to AmoCRM:', err);
   }
 };
 
@@ -94,22 +104,8 @@ const ContactModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
         source: 'Подбор контейнера (Модальное окно)',
       });
 
-      // 3. Submit to AmoCRM via backend API
-      try {
-        await fetch('/api/lead', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: 'Заявка на подбор',
-            phone,
-            source: 'Подбор контейнера (Модальное окно)'
-          }),
-        });
-      } catch (err) {
-        console.error('Error submitting to AmoCRM:', err);
-      }
+      // 3. Submit to AmoCRM
+      await sendAmoCrmLead(phone, 'Заявка на подбор контейнера с сайта');
 
       setTimeout(() => {
         setIsSubmitted(false);
@@ -228,23 +224,8 @@ const CatalogModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
         source: 'Запрос каталога (Модальное окно)',
       });
 
-      // 3. Submit to AmoCRM via backend API
-      try {
-        await fetch('/api/lead', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: 'Запрос каталога',
-            phone,
-            message: `Предоставить в мессенджер: ${messenger}`,
-            source: 'Запрос каталога (Модальное окно)'
-          }),
-        });
-      } catch (err) {
-        console.error('Error submitting to AmoCRM:', err);
-      }
+      // 3. Submit to AmoCRM
+      await sendAmoCrmLead(phone, `Запрос каталога. Прислать в мессенджер: ${messenger}`);
 
       setTimeout(() => {
         setIsSubmitted(false);
@@ -738,23 +719,8 @@ const Quiz = () => {
         source: 'Квиз на сайте',
       });
 
-      // 3. Submit to AmoCRM via backend API
-      try {
-        await fetch('/api/lead', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            name: 'Лид из Квиза',
-            phone,
-            message: quizDetails,
-            source: 'Квиз на сайте'
-          }),
-        });
-      } catch (err) {
-        console.error('Error submitting to AmoCRM:', err);
-      }
+      // 3. Submit to AmoCRM
+      await sendAmoCrmLead(phone, `Заявка из квиза.\n${quizDetails}`);
     }
   };
 
