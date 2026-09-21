@@ -112,9 +112,8 @@ const QuizLanding = () => {
       {/* Header */}
       <header className="bg-white border-b border-gray-100">
         <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Snowflake className="w-6 h-6 text-[#00AEEF]" />
-            <span className="font-extrabold text-gray-900 tracking-tight">РефЭкспресс</span>
+          <div className="flex items-center">
+            <img src="/logo.png" alt="РефЭкспресс" className="h-10 object-contain" />
           </div>
           <a
             href="tel:+79213937705"
