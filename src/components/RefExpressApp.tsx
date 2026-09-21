@@ -1391,6 +1391,7 @@ const Catalog = ({ onOpenModal }: { onOpenModal: () => void }) => {
 };
 
 const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
+  const offer = useOfferVariant();
   return (
     <section className="py-24 bg-[#004A99] relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[#004A99] to-[#002855]"></div>
