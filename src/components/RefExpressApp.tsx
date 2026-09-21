@@ -1407,7 +1407,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
           className="inline-flex items-center gap-3 bg-white text-[#004A99] px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:bg-gray-50 hover:scale-105 transition-all"
         >
           <Download className="w-6 h-6" />
-          ПОЛУЧИТЬ КАТАЛОГ И ЧЕК ЛИСТ
+          {offer.text}
         </button>
         <p className="mt-6 text-sm text-gray-400 font-medium">
           Отправим PDF-файл в WhatsApp или Telegram за 1 минуту
