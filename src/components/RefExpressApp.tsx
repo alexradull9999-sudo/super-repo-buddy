@@ -42,10 +42,60 @@ const buildLeadText = (payload: Record<string, unknown>) => {
 };
 
 const YM_COUNTER_ID = 19076140;
+// ===== A/B тест текста оффера на главных кнопках =====
+const OFFER_VARIANTS = [
+  'ПОЛУЧИТЬ АКТУАЛЬНОЕ НАЛИЧИЕ И ЦЕНЫ',
+  'РАССЧИТАТЬ ДОСТАВКУ ДО МОЕГО ГОРОДА',
+  'ПОЛУЧИТЬ 3 ПОДХОДЯЩИХ ВАРИАНТА',
+  'ПОЛУЧИТЬ ФОТО КОНТЕЙНЕРОВ В НАЛИЧИИ',
+  'ПОДОБРАТЬ КОНТЕЙНЕР ПОД МОЮ ЗАДАЧУ',
+] as const;
+const OFFER_STORAGE_KEY = 'ref_offer_variant';
+
+let currentOfferVariant = 0;
+
+const useOfferVariant = () => {
+  const [variant, setVariant] = useState(0);
+
+  useEffect(() => {
+    let index = 0;
+    try {
+      const forced = new URLSearchParams(window.location.search).get('offer');
+      if (forced && Number(forced) >= 1 && Number(forced) <= OFFER_VARIANTS.length) {
+        index = Number(forced) - 1;
+      } else {
+        const saved = window.localStorage.getItem(OFFER_STORAGE_KEY);
+        if (saved !== null && OFFER_VARIANTS[Number(saved)]) {
+          index = Number(saved);
+        } else {
+          index = Math.floor(Math.random() * OFFER_VARIANTS.length);
+          window.localStorage.setItem(OFFER_STORAGE_KEY, String(index));
+        }
+      }
+    } catch {
+      index = 0;
+    }
+    currentOfferVariant = index;
+    setVariant(index);
+    try {
+      if (typeof (window as any).ym === 'function') {
+        (window as any).ym(YM_COUNTER_ID, 'params', { offer_variant: index + 1 });
+      }
+    } catch {
+      /* noop */
+    }
+  }, []);
+
+  return { text: OFFER_VARIANTS[variant], variant: variant + 1 };
+};
+
 const reachGoal = (goal: string, params?: Record<string, unknown>) => {
   try {
     if (typeof window !== 'undefined' && typeof (window as any).ym === 'function') {
-      (window as any).ym(YM_COUNTER_ID, 'reachGoal', goal, params);
+      (window as any).ym(YM_COUNTER_ID, 'reachGoal', goal, {
+        offer_variant: currentOfferVariant + 1,
+        ...params,
+      });
     }
   } catch (err) {
     console.error('Yandex Metrika reachGoal error:', err);
