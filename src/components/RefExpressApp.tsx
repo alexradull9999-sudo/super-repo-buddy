@@ -613,7 +613,7 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 leading-[1.1] tracking-tight mb-6"
             >
-              Аренда и продажа рефконтейнеров с гарантией температуры <span className="text-[#00AEEF]">до -60°C</span>
+              {heroCopy.title}
             </motion.h1>
             
             <motion.p 
