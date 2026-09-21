@@ -646,6 +646,7 @@ const useHeroCopy = (): HeroCopy => {
 
 const Hero = () => {
   const heroCopy = useHeroCopy();
+  const offer = useOfferVariant();
   const scrollToQuiz = () => {
     document.getElementById('quiz-section')?.scrollIntoView({ behavior: 'smooth' });
   };
