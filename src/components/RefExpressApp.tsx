@@ -508,10 +508,98 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
   );
 };
 
+// Подмена заголовка под объявление Яндекс.Директа.
+// В ссылке объявления добавьте метку: ?k=arenda / ?k=prodazha / ?k=minus60 / ?k=bu / ?k=spb
+// Можно также использовать utm_term (ключевую фразу) — сработает по вхождению слова.
+type HeroCopy = { title: React.ReactNode; subtitle: string };
+
+const HERO_DEFAULT: HeroCopy = {
+  title: (
+    <>
+      Аренда и продажа рефконтейнеров с гарантией температуры{' '}
+      <span className="text-[#00AEEF]">до -60°C</span>
+    </>
+  ),
+  subtitle:
+    'Подберем контейнер под задачу за 30 минут. Доставка по всей РФ. В наличии новые и б/у модели.',
+};
+
+const HERO_VARIANTS: Record<string, HeroCopy> = {
+  arenda: {
+    title: (
+      <>
+        Аренда рефконтейнеров <span className="text-[#00AEEF]">от 1 суток</span> по всей России
+      </>
+    ),
+    subtitle:
+      'Исправная техника с PTI-тестом, доставка и подключение. Рассчитаем стоимость аренды за 30 минут.',
+  },
+  prodazha: {
+    title: (
+      <>
+        Продажа рефконтейнеров <span className="text-[#00AEEF]">со склада в наличии</span>
+      </>
+    ),
+    subtitle:
+      'Новые и б/у Carrier, Daikin, Thermo King. Проверка перед отгрузкой, гарантия, доставка по РФ.',
+  },
+  bu: {
+    title: (
+      <>
+        Б/У рефконтейнеры <span className="text-[#00AEEF]">с гарантией и PTI-тестом</span>
+      </>
+    ),
+    subtitle:
+      'Проверенные контейнеры по цене ниже новых. Фото и отчет о тестировании — до оплаты.',
+  },
+  minus60: {
+    title: (
+      <>
+        Рефконтейнеры с режимом <span className="text-[#00AEEF]">до -60°C</span> для глубокой заморозки
+      </>
+    ),
+    subtitle:
+      'Низкотемпературные модели для рыбы, мяса и фармы. Подбор под вашу задачу за 30 минут.',
+  },
+  spb: {
+    title: (
+      <>
+        Рефконтейнеры в <span className="text-[#00AEEF]">Санкт-Петербурге</span>: аренда и продажа
+      </>
+    ),
+    subtitle:
+      'Свой парк и сервис 24/7. Доставка по городу и области в день обращения.',
+  },
+};
+
+const useHeroCopy = (): HeroCopy => {
+  const [copy, setCopy] = useState<HeroCopy>(HERO_DEFAULT);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const key = (params.get('k') || '').toLowerCase().trim();
+    if (key && HERO_VARIANTS[key]) {
+      setCopy(HERO_VARIANTS[key]);
+      return;
+    }
+    const term = (params.get('utm_term') || params.get('utm_campaign') || '').toLowerCase();
+    if (!term) return;
+    if (term.includes('аренд') || term.includes('arend')) setCopy(HERO_VARIANTS.arenda);
+    else if (term.includes('б/у') || term.includes('бу ') || term.includes('bu')) setCopy(HERO_VARIANTS.bu);
+    else if (term.includes('куп') || term.includes('прода') || term.includes('prod')) setCopy(HERO_VARIANTS.prodazha);
+    else if (term.includes('60') || term.includes('заморозк')) setCopy(HERO_VARIANTS.minus60);
+    else if (term.includes('спб') || term.includes('петербург') || term.includes('spb')) setCopy(HERO_VARIANTS.spb);
+  }, []);
+
+  return copy;
+};
+
 const Hero = () => {
+  const heroCopy = useHeroCopy();
   const scrollToQuiz = () => {
     document.getElementById('quiz-section')?.scrollIntoView({ behavior: 'smooth' });
   };
+
 
   return (
     <section className="relative bg-[#F4F7F9] pt-16 pb-24 overflow-hidden">
