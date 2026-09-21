@@ -42,10 +42,60 @@ const buildLeadText = (payload: Record<string, unknown>) => {
 };
 
 const YM_COUNTER_ID = 19076140;
+// ===== A/B тест текста оффера на главных кнопках =====
+const OFFER_VARIANTS = [
+  'ПОЛУЧИТЬ АКТУАЛЬНОЕ НАЛИЧИЕ И ЦЕНЫ',
+  'РАССЧИТАТЬ ДОСТАВКУ ДО МОЕГО ГОРОДА',
+  'ПОЛУЧИТЬ 3 ПОДХОДЯЩИХ ВАРИАНТА',
+  'ПОЛУЧИТЬ ФОТО КОНТЕЙНЕРОВ В НАЛИЧИИ',
+  'ПОДОБРАТЬ КОНТЕЙНЕР ПОД МОЮ ЗАДАЧУ',
+] as const;
+const OFFER_STORAGE_KEY = 'ref_offer_variant';
+
+let currentOfferVariant = 0;
+
+const useOfferVariant = () => {
+  const [variant, setVariant] = useState(0);
+
+  useEffect(() => {
+    let index = 0;
+    try {
+      const forced = new URLSearchParams(window.location.search).get('offer');
+      if (forced && Number(forced) >= 1 && Number(forced) <= OFFER_VARIANTS.length) {
+        index = Number(forced) - 1;
+      } else {
+        const saved = window.localStorage.getItem(OFFER_STORAGE_KEY);
+        if (saved !== null && OFFER_VARIANTS[Number(saved)]) {
+          index = Number(saved);
+        } else {
+          index = Math.floor(Math.random() * OFFER_VARIANTS.length);
+          window.localStorage.setItem(OFFER_STORAGE_KEY, String(index));
+        }
+      }
+    } catch {
+      index = 0;
+    }
+    currentOfferVariant = index;
+    setVariant(index);
+    try {
+      if (typeof (window as any).ym === 'function') {
+        (window as any).ym(YM_COUNTER_ID, 'params', { offer_variant: index + 1 });
+      }
+    } catch {
+      /* noop */
+    }
+  }, []);
+
+  return { text: OFFER_VARIANTS[variant], variant: variant + 1 };
+};
+
 const reachGoal = (goal: string, params?: Record<string, unknown>) => {
   try {
     if (typeof window !== 'undefined' && typeof (window as any).ym === 'function') {
-      (window as any).ym(YM_COUNTER_ID, 'reachGoal', goal, params);
+      (window as any).ym(YM_COUNTER_ID, 'reachGoal', goal, {
+        offer_variant: currentOfferVariant + 1,
+        ...params,
+      });
     }
   } catch (err) {
     console.error('Yandex Metrika reachGoal error:', err);
@@ -596,6 +646,7 @@ const useHeroCopy = (): HeroCopy => {
 
 const Hero = () => {
   const heroCopy = useHeroCopy();
+  const offer = useOfferVariant();
   const scrollToQuiz = () => {
     document.getElementById('quiz-section')?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -637,7 +688,7 @@ const Hero = () => {
               >
                 <div className="absolute inset-0 w-full h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
                 <span className="relative flex items-center justify-center gap-2">
-                  ПОЛУЧИТЬ КАТАЛОГ И ЦЕНЫ
+                  {offer.text}
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </button>
@@ -1340,6 +1391,7 @@ const Catalog = ({ onOpenModal }: { onOpenModal: () => void }) => {
 };
 
 const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
+  const offer = useOfferVariant();
   return (
     <section className="py-24 bg-[#004A99] relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-[#004A99] to-[#002855]"></div>
@@ -1355,7 +1407,7 @@ const FinalCTA = ({ onOpenModal }: { onOpenModal: () => void }) => {
           className="inline-flex items-center gap-3 bg-white text-[#004A99] px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:bg-gray-50 hover:scale-105 transition-all"
         >
           <Download className="w-6 h-6" />
-          ПОЛУЧИТЬ КАТАЛОГ И ЧЕК ЛИСТ
+          {offer.text}
         </button>
         <p className="mt-6 text-sm text-gray-400 font-medium">
           Отправим PDF-файл в WhatsApp или Telegram за 1 минуту
