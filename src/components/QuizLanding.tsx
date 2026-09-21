@@ -18,9 +18,9 @@ const reachGoal = (goal: string, params?: Record<string, unknown>) => {
 };
 
 const GOALS = [
-  { value: 'Купить контейнер', emoji: '🛒' },
-  { value: 'Арендовать контейнер', emoji: '📦' },
-  { value: 'Хочу узнать цены', emoji: '💰' },
+  { value: 'Купить контейнер' },
+  { value: 'Арендовать контейнер' },
+  { value: 'Хочу узнать цены' },
 ];
 
 const TASKS = [
@@ -184,7 +184,6 @@ const QuizLanding = () => {
                           : 'border-gray-200 hover:border-[#00AEEF] text-gray-700'
                       }`}
                     >
-                      <span className="text-xl">{g.emoji}</span>
                       {g.value}
                     </button>
                   ))}
