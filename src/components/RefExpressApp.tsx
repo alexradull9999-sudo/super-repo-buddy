@@ -622,7 +622,7 @@ const Hero = () => {
               transition={{ delay: 0.1 }}
               className="text-lg sm:text-xl text-gray-600 mb-10 leading-relaxed"
             >
-              Подберем контейнер под задачу за 30 минут. Доставка по всей РФ. В наличии новые и б/у модели.
+              {heroCopy.subtitle}
             </motion.p>
             
             <motion.div 
