@@ -9,9 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as KvizSimpleRouteImport } from './routes/kviz-simple'
 import { Route as KvizRouteImport } from './routes/kviz'
 import { Route as IndexRouteImport } from './routes/index'
 
+const KvizSimpleRoute = KvizSimpleRouteImport.update({
+  id: '/kviz-simple',
+  path: '/kviz-simple',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const KvizRoute = KvizRouteImport.update({
   id: '/kviz',
   path: '/kviz',
@@ -26,31 +32,42 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/kviz': typeof KvizRoute
+  '/kviz-simple': typeof KvizSimpleRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/kviz': typeof KvizRoute
+  '/kviz-simple': typeof KvizSimpleRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/kviz': typeof KvizRoute
+  '/kviz-simple': typeof KvizSimpleRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/kviz'
+  fullPaths: '/' | '/kviz' | '/kviz-simple'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/kviz'
-  id: '__root__' | '/' | '/kviz'
+  to: '/' | '/kviz' | '/kviz-simple'
+  id: '__root__' | '/' | '/kviz' | '/kviz-simple'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   KvizRoute: typeof KvizRoute
+  KvizSimpleRoute: typeof KvizSimpleRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/kviz-simple': {
+      id: '/kviz-simple'
+      path: '/kviz-simple'
+      fullPath: '/kviz-simple'
+      preLoaderRoute: typeof KvizSimpleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/kviz': {
       id: '/kviz'
       path: '/kviz'
@@ -71,6 +88,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   KvizRoute: KvizRoute,
+  KvizSimpleRoute: KvizSimpleRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
