@@ -19,6 +19,8 @@ export const Route = createFileRoute("/")({
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://super-repo-buddy.lovable.app/" },
       { property: "og:image", content: "https://super-repo-buddy.lovable.app/hero.jpg" },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:image", content: "https://super-repo-buddy.lovable.app/hero.jpg" },
     ],
     links: [{ rel: "canonical", href: "https://super-repo-buddy.lovable.app/" }],
   }),
