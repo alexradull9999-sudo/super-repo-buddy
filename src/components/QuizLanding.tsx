@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { CheckCircle2, ChevronLeft, Send, Snowflake, ShieldCheck, Truck, Phone } from 'lucide-react';
+import { CheckCircle2, ChevronLeft, ChevronRight, Send, Snowflake, ShieldCheck, Truck, Phone, Package, Thermometer, Target } from 'lucide-react';
 
 import { sendAmoLead } from '@/lib/amocrm.functions';
 
@@ -34,7 +34,11 @@ const TASKS = [
 
 const STEPS_TOTAL = 4;
 
-const QuizLanding = () => {
+type QuizLandingProps = {
+  variant?: 'simple' | 'hero';
+};
+
+const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
   const [step, setStep] = useState(1);
   const [goal, setGoal] = useState('');
   const [task, setTask] = useState('');
@@ -107,35 +111,8 @@ const QuizLanding = () => {
 
   const progress = Math.round(((step - 1) / STEPS_TOTAL) * 100);
 
-  return (
-    <div className="min-h-screen bg-[#F4F7F9] flex flex-col">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-100">
-        <div className="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between">
-          <div className="flex items-center">
-            <img src="/logo.png" alt="РефЭкспресс" className="h-10 object-contain" />
-          </div>
-          <a
-            href="tel:+79213937705"
-            onClick={() => reachGoal('click_phone')}
-            className="flex items-center gap-2 text-sm font-bold text-gray-900 hover:text-[#00AEEF] transition-colors"
-          >
-            <Phone className="w-4 h-4" />
-            +7 (921) 393-77-05
-          </a>
-        </div>
-      </header>
-
-      <main className="flex-1 max-w-3xl w-full mx-auto px-4 py-8 sm:py-12">
-        <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight text-center mb-3">
-          Подберём 3 варианта из наличия и рассчитаем{' '}
-          <span className="text-[#00AEEF]">стоимость доставки</span>
-        </h1>
-        <p className="text-center text-gray-600 mb-8">
-          4 коротких вопроса — ответ в течение 30 минут в рабочее время.
-        </p>
-
-        <div className="bg-white rounded-3xl shadow-xl shadow-gray-200/60 border border-gray-100 p-6 sm:p-10">
+  const quiz = (
+    <div className="bg-white rounded-3xl shadow-xl shadow-gray-200/60 border border-gray-100 p-6 sm:p-10">
           {/* Progress */}
           {!isDone && (
             <div className="mb-8">
@@ -266,10 +243,11 @@ const QuizLanding = () => {
               <ChevronLeft className="w-4 h-4" /> Назад
             </button>
           )}
-        </div>
+    </div>
+  );
 
-        {/* Trust row */}
-        <div className="grid sm:grid-cols-3 gap-4 mt-8">
+  const trustRow = (
+    <div className="grid sm:grid-cols-3 gap-4 mt-8">
           {[
             { icon: ShieldCheck, text: 'PTI-тест и гарантия' },
             { icon: Truck, text: 'Доставка по всей РФ' },
@@ -280,7 +258,139 @@ const QuizLanding = () => {
               <span className="text-sm font-semibold text-gray-700">{text}</span>
             </div>
           ))}
+    </div>
+  );
+
+  const header = (
+    <header className={`${variant === 'hero' ? 'sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm' : 'bg-white'} border-b border-gray-100`}>
+      <div className={`${variant === 'hero' ? 'max-w-7xl sm:px-6 lg:px-8 h-20' : 'max-w-3xl py-4'} mx-auto px-4 flex items-center justify-between`}>
+        <img src="/logo.png" alt="РефЭкспресс" className="h-10 object-contain" />
+        <div className="flex items-center gap-5">
+          {variant === 'hero' && (
+            <span className="hidden sm:block text-xs text-gray-500">Ответим в течение 30 минут</span>
+          )}
+          <a
+            href="tel:+79213937705"
+            onClick={() => reachGoal('click_phone')}
+            className="flex items-center gap-2 text-sm sm:text-lg font-bold text-gray-900 hover:text-[#00AEEF] transition-colors"
+          >
+            <Phone className="w-4 h-4" />
+            <span className="hidden sm:inline">+7 (921) 393-77-05</span>
+            <span className="sm:hidden">Позвонить</span>
+          </a>
         </div>
+      </div>
+    </header>
+  );
+
+  if (variant === 'hero') {
+    const scrollToQuiz = () => {
+      reachGoal('quiz_start', { form: 'retargeting_quiz', source: 'hero_button' });
+      document.getElementById('quiz-form')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    return (
+      <div className="min-h-screen bg-[#F4F7F9] font-sans">
+        {header}
+        <main>
+          <section className="relative overflow-hidden bg-[#F4F7F9] py-10 sm:py-14 lg:py-16">
+            <div className="relative z-10 mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:px-8">
+              <div className="max-w-2xl">
+                <motion.h1
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="mb-6 text-4xl font-extrabold leading-[1.1] text-gray-900 sm:text-5xl lg:text-6xl"
+                >
+                  Подберём 3 варианта из наличия и рассчитаем{' '}
+                  <span className="text-[#00AEEF]">стоимость доставки</span>
+                </motion.h1>
+                <motion.p
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="mb-8 text-lg leading-relaxed text-gray-600 sm:text-xl"
+                >
+                  Ответьте на 4 коротких вопроса — предложим подходящие рефконтейнеры и перезвоним в течение 30 минут.
+                </motion.p>
+                <motion.button
+                  type="button"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  onClick={scrollToQuiz}
+                  className="group mb-10 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#004A99] px-8 py-4 text-lg font-bold text-white shadow-lg shadow-[#004A99]/30 transition-all hover:bg-[#003875] sm:w-auto"
+                >
+                  ПОДОБРАТЬ 3 ВАРИАНТА
+                  <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                </motion.button>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.35 }}
+                  className="grid grid-cols-2 gap-5 sm:grid-cols-4"
+                >
+                  {[
+                    { icon: Package, title: 'В наличии', text: 'Новые и б/у' },
+                    { icon: Thermometer, title: '-60°C ... +30°C', text: 'Любой режим' },
+                    { icon: Truck, title: 'По всей РФ', text: 'Своя логистика' },
+                    { icon: Target, title: 'Точный подбор', text: 'Под задачу' },
+                  ].map(({ icon: Icon, title, text }) => (
+                    <div key={title} className="flex flex-col gap-1.5">
+                      <Icon className="h-6 w-6 text-[#00AEEF]" />
+                      <span className="text-sm font-semibold text-gray-900">{title}</span>
+                      <span className="text-xs text-gray-500">{text}</span>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
+              <motion.div
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="relative h-[340px] overflow-hidden rounded-2xl shadow-2xl sm:h-[460px] lg:h-[600px]"
+              >
+                <img src="/hero.jpg" alt="Рефрижераторный контейнер РефЭкспресс" className="h-full w-full object-cover" />
+                <div className="absolute bottom-5 left-5 right-5 rounded-xl border border-white/30 bg-white/90 p-4 shadow-lg backdrop-blur-md sm:left-6 sm:right-auto sm:max-w-xs">
+                  <div className="flex items-center gap-3">
+                    <ShieldCheck className="h-7 w-7 shrink-0 text-[#00AEEF]" />
+                    <div>
+                      <p className="font-bold text-gray-900">Проверка перед отгрузкой</p>
+                      <p className="text-sm text-gray-600">PTI-тест и гарантия</p>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </section>
+
+          <section id="quiz-form" className="scroll-mt-20 border-t border-gray-100 bg-white py-12 sm:py-16">
+            <div className="mx-auto w-full max-w-3xl px-4">
+              <div className="mb-8 text-center">
+                <h2 className="text-2xl font-extrabold text-gray-900 sm:text-4xl">Ответьте на 4 коротких вопроса</h2>
+                <p className="mt-3 text-gray-600">Это займёт около минуты.</p>
+              </div>
+              {quiz}
+              {trustRow}
+            </div>
+          </section>
+        </main>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#F4F7F9] flex flex-col">
+      {header}
+      <main className="flex-1 max-w-3xl w-full mx-auto px-4 py-8 sm:py-12">
+        <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight text-center mb-3">
+          Подберём 3 варианта из наличия и рассчитаем{' '}
+          <span className="text-[#00AEEF]">стоимость доставки</span>
+        </h1>
+        <p className="text-center text-gray-600 mb-8">
+          4 коротких вопроса — ответ в течение 30 минут в рабочее время.
+        </p>
+        {quiz}
+        {trustRow}
       </main>
     </div>
   );

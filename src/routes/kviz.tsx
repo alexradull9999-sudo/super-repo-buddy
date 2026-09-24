@@ -21,5 +21,5 @@ export const Route = createFileRoute("/kviz")({
       { name: "robots", content: "noindex, follow" },
     ],
   }),
-  component: QuizLanding,
+  component: () => <QuizLanding variant="hero" />,
 });
