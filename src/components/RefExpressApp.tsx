@@ -1648,7 +1648,7 @@ const Questions = ({ onOpenModal }: { onOpenModal: () => void }) => {
   );
 };
 
-const Footer = () => {
+export const Footer = () => {
   return (
     <footer id="contacts" className="bg-gray-900 text-gray-300 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

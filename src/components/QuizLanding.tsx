@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, ChevronLeft, ChevronRight, Send, Snowflake, ShieldCheck, Truck, Phone, Package, Thermometer, Target } from 'lucide-react';
 
 import { sendAmoLead } from '@/lib/amocrm.functions';
+import { Footer } from '@/components/RefExpressApp';
 
 const MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/5r6wxgf3i5750sdcv4kn7nrpfza3l55u';
 const YM_COUNTER_ID = 19076140;
