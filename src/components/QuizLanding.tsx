@@ -375,6 +375,7 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
             </div>
           </section>
         </main>
+        <Footer />
       </div>
     );
   }
