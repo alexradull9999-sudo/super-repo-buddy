@@ -302,7 +302,7 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
                   animate={{ opacity: 1, y: 0 }}
                   className="mb-6 text-4xl font-extrabold leading-[1.1] text-gray-900 sm:text-5xl lg:text-6xl"
                 >
-                  Подберём 3 варианта из наличия и рассчитаем{' '}
+                  Подберём рефконтейнер и рассчитаем{' '}
                   <span className="text-[#00AEEF]">стоимость доставки</span>
                 </motion.h1>
                 <motion.p
@@ -385,8 +385,8 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
       {header}
       <main className="flex-1 max-w-3xl w-full mx-auto px-4 py-8 sm:py-12">
         <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight text-center mb-3">
-          Подберём 3 варианта из наличия и рассчитаем{' '}
-          <span className="text-[#00AEEF]">стоимость доставки</span>
+        Подберём рефконтейнер и рассчитаем{' '}
+        <span className="text-[#00AEEF]">стоимость доставки</span>
         </h1>
         <p className="text-center text-gray-600 mb-8">
           4 коротких вопроса — ответ в течение 30 минут в рабочее время.
