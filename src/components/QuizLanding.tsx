@@ -302,8 +302,8 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
                   animate={{ opacity: 1, y: 0 }}
                   className="mb-6 text-4xl font-extrabold leading-[1.1] text-gray-900 sm:text-5xl lg:text-6xl"
                 >
-                  Подберём рефконтейнер и рассчитаем{' '}
-                  <span className="text-[#00AEEF]">стоимость доставки</span>
+                  Получите{' '}
+                  <span className="text-[#00AEEF]">каталог</span> в течение 30 минут
                 </motion.h1>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
