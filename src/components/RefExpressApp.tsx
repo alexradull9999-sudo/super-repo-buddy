@@ -534,7 +534,7 @@ const Header = ({ onOpenModal }: { onOpenModal: () => void }) => {
               <a href="tel:+79213937705" onClick={() => reachGoal('click_phone')} className="text-lg font-bold text-gray-900 hover:text-[#00AEEF] transition-colors">
                 +7 (921) 393-77-05
               </a>
-              <a href="mailto:sales@refexpress.ru" onClick={() => reachGoal('click_email')} className="text-xs text-gray-500 hover:text-[#00AEEF] transition-colors">sales@refexpress.ru</a>
+              <a href="mailto:krksales@refexpress.ru" onClick={() => reachGoal('click_email')} className="text-xs text-gray-500 hover:text-[#00AEEF] transition-colors">krksales@refexpress.ru</a>
             </div>
             <button 
               onClick={onOpenModal}
@@ -1683,7 +1683,7 @@ export const Footer = () => {
               </li>
               <li className="flex items-center gap-3">
                 <Mail className="w-5 h-5 text-[#00AEEF] shrink-0" />
-                <a href="mailto:sales@refexpress.ru" onClick={() => reachGoal('click_email')} className="hover:text-white transition-colors">sales@refexpress.ru</a>
+                <a href="mailto:krksales@refexpress.ru" onClick={() => reachGoal('click_email')} className="hover:text-white transition-colors">krksales@refexpress.ru</a>
               </li>
             </ul>
           </div>
