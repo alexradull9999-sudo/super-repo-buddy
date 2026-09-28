@@ -229,7 +229,7 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
                   disabled={phone.trim().length < 6 || isSending}
                   className="w-full bg-[#004A99] hover:bg-[#003875] disabled:opacity-40 disabled:cursor-not-allowed text-white font-bold py-4 rounded-xl text-lg transition-colors flex items-center justify-center gap-2"
                 >
-                  {isSending ? 'ОТПРАВЛЯЕМ...' : 'ПОЛУЧИТЬ 3 ВАРИАНТА'}
+                  {isSending ? 'ОТПРАВЛЯЕМ...' : 'ПОЛУЧИТЬ КАТАЛОГ'}
                   <Send className="w-5 h-5" />
                 </button>
                 <p className="text-xs text-gray-400 text-center mt-4">
@@ -324,7 +324,7 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
                   onClick={scrollToQuiz}
                   className="group mb-10 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[#004A99] px-8 py-4 text-lg font-bold text-white shadow-lg shadow-[#004A99]/30 transition-all hover:bg-[#003875] sm:w-auto"
                 >
-                  ПОДОБРАТЬ 3 ВАРИАНТА
+                  ПОЛУЧИТЬ КАТАЛОГ
                   <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </motion.button>
                 <motion.div
