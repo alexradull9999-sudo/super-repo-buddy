@@ -110,6 +110,7 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
 
     setIsSending(false);
     setIsDone(true);
+    navigate({ to: '/spasibo' });
   };
 
   const progress = Math.round(((step - 1) / STEPS_TOTAL) * 100);
@@ -304,8 +305,8 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
                   animate={{ opacity: 1, y: 0 }}
                   className="mb-6 text-4xl font-extrabold leading-[1.1] text-gray-900 sm:text-5xl lg:text-6xl"
                 >
-                  Получите{' '}
-                  <span className="text-[#00AEEF]">каталог</span> в течение 30 минут
+                  Ответьте на несколько вопросов и получите{' '}
+                  <span className="text-[#00AEEF]">каталог рефконтейнеров</span>
                 </motion.h1>
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
@@ -313,7 +314,7 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
                   transition={{ delay: 0.1 }}
                   className="mb-8 text-lg leading-relaxed text-gray-600 sm:text-xl"
                 >
-                  Ответьте на 4 коротких вопроса — предложим подходящие рефконтейнеры и перезвоним в течение 30 минут.
+                  4 коротких вопроса — пришлём каталог с актуальными ценами и перезвоним в течение 30 минут.
                 </motion.p>
                 <motion.button
                   type="button"
@@ -387,11 +388,11 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
       {header}
       <main className="flex-1 max-w-3xl w-full mx-auto px-4 py-8 sm:py-12">
         <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight text-center mb-3">
-        Подберём рефконтейнер и рассчитаем{' '}
-        <span className="text-[#00AEEF]">стоимость доставки</span>
+        Ответьте на несколько вопросов и получите{' '}
+        <span className="text-[#00AEEF]">каталог рефконтейнеров</span>
         </h1>
         <p className="text-center text-gray-600 mb-8">
-          4 коротких вопроса — ответ в течение 30 минут в рабочее время.
+          4 коротких вопроса — каталог с ценами и ответ в течение 30 минут.
         </p>
         {quiz}
         {trustRow}
