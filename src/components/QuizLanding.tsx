@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from '@tanstack/react-router';
 import { motion, AnimatePresence } from 'motion/react';
 import { CheckCircle2, ChevronLeft, ChevronRight, Send, Snowflake, ShieldCheck, Truck, Phone, Package, Thermometer, Target } from 'lucide-react';
 
@@ -47,6 +48,7 @@ const QuizLanding = ({ variant = 'simple' }: QuizLandingProps) => {
   const [phone, setPhone] = useState('');
   const [isSending, setIsSending] = useState(false);
   const [isDone, setIsDone] = useState(false);
+  const navigate = useNavigate();
 
   const goNext = (next: number) => {
     if (step === 1) reachGoal('quiz_start', { form: 'retargeting_quiz' });
