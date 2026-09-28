@@ -1729,11 +1729,11 @@ export default function RefExpressApp() {
       <Header onOpenModal={openContactModal} />
       <main>
         <Hero />
-        <Benefits />
+        <Catalog onOpenModal={openContactModal} />
         <Quiz />
         <Trust onOpenContactModal={openContactModal} />
         <HowItWorks />
-        <Catalog onOpenModal={openContactModal} />
+        <Benefits />
         <FinalCTA onOpenModal={openCatalogModal} />
         <ServiceCenter onOpenModal={openContactModal} />
         <TerminalsMap />
