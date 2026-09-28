@@ -1733,7 +1733,7 @@ export default function RefExpressApp() {
         <Quiz />
         <Trust onOpenContactModal={openContactModal} />
         <HowItWorks />
-        <Catalog onOpenModal={openContactModal} />
+        <Benefits />
         <FinalCTA onOpenModal={openCatalogModal} />
         <ServiceCenter onOpenModal={openContactModal} />
         <TerminalsMap />
