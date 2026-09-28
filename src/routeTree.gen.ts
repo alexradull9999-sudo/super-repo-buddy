@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SpasiboRouteImport } from './routes/spasibo'
 import { Route as KvizSimpleRouteImport } from './routes/kviz-simple'
 import { Route as KvizRouteImport } from './routes/kviz'
 import { Route as IndexRouteImport } from './routes/index'
 
+const SpasiboRoute = SpasiboRouteImport.update({
+  id: '/spasibo',
+  path: '/spasibo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const KvizSimpleRoute = KvizSimpleRouteImport.update({
   id: '/kviz-simple',
   path: '/kviz-simple',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/kviz': typeof KvizRoute
   '/kviz-simple': typeof KvizSimpleRoute
+  '/spasibo': typeof SpasiboRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/kviz': typeof KvizRoute
   '/kviz-simple': typeof KvizSimpleRoute
+  '/spasibo': typeof SpasiboRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/kviz': typeof KvizRoute
   '/kviz-simple': typeof KvizSimpleRoute
+  '/spasibo': typeof SpasiboRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/kviz' | '/kviz-simple'
+  fullPaths: '/' | '/kviz' | '/kviz-simple' | '/spasibo'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/kviz' | '/kviz-simple'
-  id: '__root__' | '/' | '/kviz' | '/kviz-simple'
+  to: '/' | '/kviz' | '/kviz-simple' | '/spasibo'
+  id: '__root__' | '/' | '/kviz' | '/kviz-simple' | '/spasibo'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   KvizRoute: typeof KvizRoute
   KvizSimpleRoute: typeof KvizSimpleRoute
+  SpasiboRoute: typeof SpasiboRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/spasibo': {
+      id: '/spasibo'
+      path: '/spasibo'
+      fullPath: '/spasibo'
+      preLoaderRoute: typeof SpasiboRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/kviz-simple': {
       id: '/kviz-simple'
       path: '/kviz-simple'
@@ -89,6 +106,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   KvizRoute: KvizRoute,
   KvizSimpleRoute: KvizSimpleRoute,
+  SpasiboRoute: SpasiboRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

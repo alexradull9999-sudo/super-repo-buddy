@@ -4,13 +4,13 @@ import QuizLanding from "@/components/QuizLanding";
 export const Route = createFileRoute("/kviz")({
   head: () => ({
     meta: [
-      { title: "Получите каталог рефконтейнеров в течение 30 минут — РефЭкспресс" },
+      { title: "Ответьте на несколько вопросов и получите каталог рефконтейнеров — РефЭкспресс" },
       {
         name: "description",
         content:
           "Ответьте на 4 коротких вопроса — пришлём каталог рефконтейнеров с ценами в течение 30 минут.",
       },
-      { property: "og:title", content: "Получите каталог рефконтейнеров в течение 30 минут — РефЭкспресс" },
+      { property: "og:title", content: "Ответьте на несколько вопросов и получите каталог рефконтейнеров — РефЭкспресс" },
       {
         property: "og:description",
         content:
