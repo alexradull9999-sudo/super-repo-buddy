@@ -1381,7 +1381,11 @@ const Catalog = ({ onOpenModal }: { onOpenModal: () => void }) => {
               </div>
               <div className="p-6 flex flex-col flex-1">
                 <h3 className="text-lg font-bold text-gray-900 mb-2">{item.title}</h3>
-                <p className="text-gray-600 text-sm mb-6 flex-1">{item.desc}</p>
+                <p className="text-gray-600 text-sm mb-4 flex-1">{item.desc}</p>
+                <div className="mb-4">
+                  <span className="text-xs text-gray-500 block mb-0.5">Цена</span>
+                  <span className="text-xl font-bold text-[#004A99]">{item.price}</span>
+                </div>
                 <button onClick={onOpenModal} className="w-full py-3 border-2 border-[#004A99] text-[#004A99] font-semibold rounded-xl hover:bg-[#004A99] hover:text-white transition-colors">
                   Узнать цену
                 </button>
