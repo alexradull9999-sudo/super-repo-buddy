@@ -123,7 +123,7 @@ export default function MobileWarehouseArticle() {
   const heroY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [0, 90]);
 
   return (
-    <div className="min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
+    <div className="article-theme min-h-screen bg-background font-sans text-foreground selection:bg-primary selection:text-primary-foreground">
       <ArticleHeader />
 
       <main>
@@ -344,8 +344,6 @@ export default function MobileWarehouseArticle() {
           </section>
 
           <section className="relative overflow-hidden bg-primary py-20 sm:py-28">
-            <div className="absolute -right-24 -top-36 size-96 rounded-full border border-primary-foreground/20" />
-            <div className="absolute -right-10 -top-20 size-64 rounded-full border border-primary-foreground/20" />
             <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="grid items-end gap-10 lg:grid-cols-[1.25fr_0.75fr]">
                 <div>
