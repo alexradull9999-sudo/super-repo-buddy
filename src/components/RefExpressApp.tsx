@@ -1338,22 +1338,26 @@ const Catalog = ({ onOpenModal }: { onOpenModal: () => void }) => {
     {
       title: "20 футов (Standart)",
       desc: "Компактный, до 10 паллет. Идеален для малого бизнеса.",
-      img: "/containers/20.webp"
+      img: "/containers/20.webp",
+      price: "от 600 000 ₽"
     },
     {
       title: "40 футов (High Cube)",
       desc: "Увеличенная высота, до 25 паллет. Оптимально для крупных складов.",
-      img: "/containers/40.png"
+      img: "/containers/40.png",
+      price: "от 600 000 ₽"
     },
     {
       title: "Шоковая заморозка",
       desc: "Усиленные агрегаты для быстрой заморозки мяса/рыбы за 4-6 часов.",
-      img: "/containers/shokzam.webp"
+      img: "/containers/shokzam.webp",
+      price: "от 600 000 ₽"
     },
     {
       title: "Спецрешения",
       desc: "Контейнеры с дополнительными дверьми или перегородками.",
-      img: "/containers/spec.webp"
+      img: "/containers/spec.webp",
+      price: "от 600 000 ₽"
     }
   ];
 
