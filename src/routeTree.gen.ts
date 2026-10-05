@@ -13,6 +13,7 @@ import { Route as SpasiboRouteImport } from './routes/spasibo'
 import { Route as KvizSimpleRouteImport } from './routes/kviz-simple'
 import { Route as KvizRouteImport } from './routes/kviz'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogMobilnyeSkladyIzRefkonteynerovRouteImport } from './routes/blog.mobilnye-sklady-iz-refkonteynerov'
 
 const SpasiboRoute = SpasiboRouteImport.update({
   id: '/spasibo',
@@ -34,18 +35,26 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogMobilnyeSkladyIzRefkonteynerovRoute =
+  BlogMobilnyeSkladyIzRefkonteynerovRouteImport.update({
+    id: '/blog/mobilnye-sklady-iz-refkonteynerov',
+    path: '/blog/mobilnye-sklady-iz-refkonteynerov',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/kviz': typeof KvizRoute
   '/kviz-simple': typeof KvizSimpleRoute
   '/spasibo': typeof SpasiboRoute
+  '/blog/mobilnye-sklady-iz-refkonteynerov': typeof BlogMobilnyeSkladyIzRefkonteynerovRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/kviz': typeof KvizRoute
   '/kviz-simple': typeof KvizSimpleRoute
   '/spasibo': typeof SpasiboRoute
+  '/blog/mobilnye-sklady-iz-refkonteynerov': typeof BlogMobilnyeSkladyIzRefkonteynerovRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +62,30 @@ export interface FileRoutesById {
   '/kviz': typeof KvizRoute
   '/kviz-simple': typeof KvizSimpleRoute
   '/spasibo': typeof SpasiboRoute
+  '/blog/mobilnye-sklady-iz-refkonteynerov': typeof BlogMobilnyeSkladyIzRefkonteynerovRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/kviz' | '/kviz-simple' | '/spasibo'
+  fullPaths:
+    | '/'
+    | '/kviz'
+    | '/kviz-simple'
+    | '/spasibo'
+    | '/blog/mobilnye-sklady-iz-refkonteynerov'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/kviz' | '/kviz-simple' | '/spasibo'
-  id: '__root__' | '/' | '/kviz' | '/kviz-simple' | '/spasibo'
+  to:
+    | '/'
+    | '/kviz'
+    | '/kviz-simple'
+    | '/spasibo'
+    | '/blog/mobilnye-sklady-iz-refkonteynerov'
+  id:
+    | '__root__'
+    | '/'
+    | '/kviz'
+    | '/kviz-simple'
+    | '/spasibo'
+    | '/blog/mobilnye-sklady-iz-refkonteynerov'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +93,7 @@ export interface RootRouteChildren {
   KvizRoute: typeof KvizRoute
   KvizSimpleRoute: typeof KvizSimpleRoute
   SpasiboRoute: typeof SpasiboRoute
+  BlogMobilnyeSkladyIzRefkonteynerovRoute: typeof BlogMobilnyeSkladyIzRefkonteynerovRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +126,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/mobilnye-sklady-iz-refkonteynerov': {
+      id: '/blog/mobilnye-sklady-iz-refkonteynerov'
+      path: '/blog/mobilnye-sklady-iz-refkonteynerov'
+      fullPath: '/blog/mobilnye-sklady-iz-refkonteynerov'
+      preLoaderRoute: typeof BlogMobilnyeSkladyIzRefkonteynerovRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +141,8 @@ const rootRouteChildren: RootRouteChildren = {
   KvizRoute: KvizRoute,
   KvizSimpleRoute: KvizSimpleRoute,
   SpasiboRoute: SpasiboRoute,
+  BlogMobilnyeSkladyIzRefkonteynerovRoute:
+    BlogMobilnyeSkladyIzRefkonteynerovRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Keep long-form editorial content in dedicated route components rather than expanding the main application component, so public pages remain maintainable.
