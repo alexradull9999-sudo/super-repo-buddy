@@ -9,20 +9,15 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as SpasiboRouteImport } from './routes/spasibo'
-import { Route as KvizSimpleRouteImport } from './routes/kviz-simple'
-import { Route as KvizRouteImport } from './routes/kviz'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as KvizRouteImport } from './routes/kviz'
+import { Route as KvizSimpleRouteImport } from './routes/kviz-simple'
+import { Route as SpasiboRouteImport } from './routes/spasibo'
 import { Route as BlogMobilnyeSkladyIzRefkonteynerovRouteImport } from './routes/blog.mobilnye-sklady-iz-refkonteynerov'
 
-const SpasiboRoute = SpasiboRouteImport.update({
-  id: '/spasibo',
-  path: '/spasibo',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const KvizSimpleRoute = KvizSimpleRouteImport.update({
-  id: '/kviz-simple',
-  path: '/kviz-simple',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const KvizRoute = KvizRouteImport.update({
@@ -30,9 +25,14 @@ const KvizRoute = KvizRouteImport.update({
   path: '/kviz',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const KvizSimpleRoute = KvizSimpleRouteImport.update({
+  id: '/kviz-simple',
+  path: '/kviz-simple',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SpasiboRoute = SpasiboRouteImport.update({
+  id: '/spasibo',
+  path: '/spasibo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogMobilnyeSkladyIzRefkonteynerovRoute =
@@ -98,18 +98,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/spasibo': {
-      id: '/spasibo'
-      path: '/spasibo'
-      fullPath: '/spasibo'
-      preLoaderRoute: typeof SpasiboRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/kviz-simple': {
-      id: '/kviz-simple'
-      path: '/kviz-simple'
-      fullPath: '/kviz-simple'
-      preLoaderRoute: typeof KvizSimpleRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/kviz': {
@@ -119,11 +112,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof KvizRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/kviz-simple': {
+      id: '/kviz-simple'
+      path: '/kviz-simple'
+      fullPath: '/kviz-simple'
+      preLoaderRoute: typeof KvizSimpleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/spasibo': {
+      id: '/spasibo'
+      path: '/spasibo'
+      fullPath: '/spasibo'
+      preLoaderRoute: typeof SpasiboRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/mobilnye-sklady-iz-refkonteynerov': {
