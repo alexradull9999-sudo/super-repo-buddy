@@ -114,6 +114,27 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     ],
     scripts: [
       {
+        id: "qoopler-pixel",
+        type: "text/javascript",
+        children: `(function(d, w) {
+  var n = d.getElementsByTagName("script")[0],
+    s = d.createElement("script");
+  s.type = "text/javascript";
+  s.async = true;
+  s.src = "https://qoopler.ru/index.php?u=t2tcbm7&ref=" + d.referrer + "&page=" + encodeURIComponent(w.location.href);
+  n.parentNode.insertBefore(s, n);
+})(document, window);`,
+      },
+      {
+        id: "roistat-counter",
+        children: `(function(w, d, s, h, id) {
+  w.roistatProjectId = id; w.roistatHost = h; w.roistatPage = d.location.href; w.roistatReferrer = d.referrer;
+  var p = d.location.protocol == "https:" ? "https://" : "http://";
+  var u = /^.*roistat_visit=[^;]+(.*)?$/.test(d.cookie) ? "/dist/module.js" : "/api/site/1.0/"+id+"/init?referrer="+encodeURIComponent(d.location.href);
+  var js = d.createElement(s); js.charset="UTF-8"; js.async = 1; js.src = p+h+u; var js2 = d.getElementsByTagName(s)[0]; js2.parentNode.insertBefore(js, js2);
+})(window, document, 'script', 'cloud.roistat.com', 'ba020dedffd6528dc114306865e96b96');`,
+      },
+      {
         children: `(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();for(var j=0;j<document.scripts.length;j++){if(document.scripts[j].src===r){return;}}k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym(19076140,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:true});`,
       },
       {
