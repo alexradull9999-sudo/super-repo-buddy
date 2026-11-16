@@ -1284,12 +1284,12 @@ const Trust = ({ onOpenContactModal }: { onOpenContactModal: () => void }) => {
         <div className="pt-12 border-t border-gray-100">
           <p className="text-center text-sm font-semibold text-gray-400 uppercase tracking-widest mb-8">Среди наших клиентов</p>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center justify-items-center opacity-70 grayscale hover:grayscale-0 transition-all duration-500">
-            <img src="/partner/kinros.png" alt="Kinros" className="max-h-12 object-contain hover:scale-110 transition-transform" />
-            <img src="/partner/polarstar.png" alt="Polar Star" className="max-h-12 object-contain hover:scale-110 transition-transform" />
-            <img src="/partner/evergreen.png" alt="Evergreen" className="max-h-12 object-contain hover:scale-110 transition-transform" />
-            <img src="/partner/agroprom.png" alt="Agroprom" className="max-h-12 object-contain hover:scale-110 transition-transform" />
-            <img src="/partner/gazprom.png" alt="Gazprom" className="max-h-12 object-contain hover:scale-110 transition-transform" />
-            <img src="/partner/alrosa.png" alt="Alrosa" className="max-h-12 object-contain hover:scale-110 transition-transform" />
+            <img src="/partner/kinros.png" alt="Kinros" className="w-full max-w-[192px] h-auto object-contain hover:scale-110 transition-transform" />
+            <img src="/partner/polarstar.png" alt="Polar Star" className="w-full max-w-[192px] h-auto object-contain hover:scale-110 transition-transform" />
+            <img src="/partner/evergreen.png" alt="Evergreen" className="w-full max-w-[192px] h-auto object-contain hover:scale-110 transition-transform" />
+            <img src="/partner/agroprom.png" alt="Agroprom" className="w-full max-w-[192px] h-auto object-contain hover:scale-110 transition-transform" />
+            <img src="/partner/gazprom.png" alt="Gazprom" className="w-full max-w-[192px] h-auto object-contain hover:scale-110 transition-transform" />
+            <img src="/partner/alrosa.png" alt="Alrosa" className="w-full max-w-[192px] h-auto object-contain hover:scale-110 transition-transform" />
           </div>
         </div>
       </div>
